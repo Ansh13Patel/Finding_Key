@@ -8,10 +8,12 @@ public class EnemyMovement : MonoBehaviour
     public AIPath enemyAI;
     public Animator enemyAnim;
     public GameObject player;
-
+    [HideInInspector]
+    public static EnemyMovement InstanceEnemy;
 
     private void Start()
     {
+        InstanceEnemy = this;
         enemyAnim.SetBool("Attacking", false);
     }
     // Update is called once per frame
@@ -33,21 +35,26 @@ public class EnemyMovement : MonoBehaviour
         }
 
         attackplayer();
+
     }
 
 
     void attackplayer()
     {
-        if(Mathf.Abs(player.transform.position.magnitude - this.gameObject.transform.position.magnitude) <= 2f)
+        if(Mathf.Abs(player.transform.position.magnitude - this.gameObject.transform.position.magnitude) <= 0.5f)
         {
             enemyAnim.SetBool("Attacking", true);
             StartCoroutine(stopAttacking());
+            
         }
     }
 
     IEnumerator stopAttacking()
     {
         enemyAnim.SetBool("Attacking", false);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
     }
+
+
+   
 }
