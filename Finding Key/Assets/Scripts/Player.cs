@@ -55,28 +55,26 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Coin")
         {
             GameManager.Instance.Coin_Collect();
-            Instantiate(coinParticleSystem, collision.gameObject.transform.position, Quaternion.identity);
+            GameObject clone = (GameObject)Instantiate(coinParticleSystem, collision.gameObject.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
-            DestroyCoinParticleSystem();
+            Destroy(clone, 1f);
         }
         if(collision.gameObject.tag == "Key")
         {
             GameManager.Instance.Key();
             Destroy(collision.gameObject);
         }
+        if (collision.CompareTag("CheckPoint"))
+        {
+           GameManager.Instance.intialCheckPoint = collision.gameObject;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            GameManager.Instance.livesRemaining.text = "X " + GameManager.Instance.livesleft.ToString();
             GameManager.Instance.death();
         }
     }
 
-    IEnumerable DestroyCoinParticleSystem()
-    {
-        Destroy(coinParticleSystem);
-        yield return 1f;
-    }
 }
