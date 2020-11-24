@@ -28,13 +28,15 @@ public class GameManager : MonoBehaviour
     public AudioClip gameLoseSFX;
     public GameObject nextLevelButton;
     public GameObject mainMenuButton;
-
     [HideInInspector]
     public int livesleft = 3;
+
+
     bool takeaway = false;
     int time = 0;
     private int keyleft = 0;
     int Score = 0;
+    int currentIndex;
     AudioSource _audio;
 
     private void Start()
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         _audio = gameObject.AddComponent<AudioSource>();
         time = timeToCompleteLevel;
         livesleft = playerLives;
+        currentIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void Update()
@@ -113,6 +116,7 @@ public class GameManager : MonoBehaviour
             _audio.PlayOneShot(gameWinSFX);
             nextLevelButton.SetActive(true);
             mainMenuButton.SetActive(true);
+            passlevel();
         }
 
     }
@@ -143,4 +147,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(nextToLoad);
     }
+
+    public void passlevel()
+    {
+        if(currentIndex >= PlayerPrefs.GetInt("levelsunlocked"))
+        {
+            PlayerPrefs.GetInt("levelunlocked", currentIndex++);
+        }
+    }
+   
 }

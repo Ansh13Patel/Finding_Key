@@ -20580,6 +20580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 690725369}
+  nextToLoad: Level_3
   playerLives: 3
   keyToBeCollected: 5
   timeToCompleteLevel: 100
