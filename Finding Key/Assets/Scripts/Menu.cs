@@ -23,6 +23,6 @@ public class Menu : MonoBehaviour
     }
     public void PlayButton()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Level_1");
     }
 }

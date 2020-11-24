@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public Text scoreText;
-    public string levelToBeReload;
+    public string nextToLoad;
+    public int playerLives;
+    public int keyToBeCollected;
+    public int timeToCompleteLevel;
     public GameObject Player;
     public GameObject pauseCanvas;
     public GameObject intialCheckPoint;
@@ -26,10 +29,10 @@ public class GameManager : MonoBehaviour
     public GameObject nextLevelButton;
     public GameObject mainMenuButton;
 
-   [HideInInspector]
+    [HideInInspector]
     public int livesleft = 3;
     bool takeaway = false;
-    int time = 75;
+    int time = 0;
     private int keyleft = 0;
     int Score = 0;
     AudioSource _audio;
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         _audio = gameObject.AddComponent<AudioSource>();
+        time = timeToCompleteLevel;
+        livesleft = playerLives;
     }
 
     private void Update()
@@ -94,13 +99,13 @@ public class GameManager : MonoBehaviour
 
     public void Key()
     {
-        if (keyleft != 3)
+        if (keyleft != keyToBeCollected)
         {
             keyleft += 1;
             keyLeftText.text = "X " + keyleft.ToString();
             _audio.PlayOneShot(keyCollectSFX);
         }
-        if (keyleft == 3)
+        if (keyleft == keyToBeCollected)
         {
             Player.GetComponent<Animator>().SetBool("Win", true);
             Time.timeScale = 0f;
@@ -132,5 +137,10 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         }
         takeaway = false;
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(nextToLoad);
     }
 }
