@@ -16512,7 +16512,7 @@ MonoBehaviour:
   playerLives: 3
   keyToBeCollected: 3
   timeToCompleteLevel: 75
-  Player: {fileID: 1358442879}
+  player: {fileID: 1358442879}
   pauseCanvas: {fileID: 1830687854}
   intialCheckPoint: {fileID: 495117686}
   livesRemaining: {fileID: 306392091}

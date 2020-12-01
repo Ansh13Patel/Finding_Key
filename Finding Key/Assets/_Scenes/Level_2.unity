@@ -20584,7 +20584,7 @@ MonoBehaviour:
   playerLives: 3
   keyToBeCollected: 5
   timeToCompleteLevel: 100
-  Player: {fileID: 1358442879}
+  player: {fileID: 1358442879}
   pauseCanvas: {fileID: 1830687854}
   intialCheckPoint: {fileID: 0}
   livesRemaining: {fileID: 306392091}
@@ -24265,7 +24265,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 75s
+  m_Text: 100s
 --- !u!222 &2071017813
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24290,7 +24290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 51, y: 0}
+  m_AnchoredPosition: {x: 27.7, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!4 &2076664368 stripped

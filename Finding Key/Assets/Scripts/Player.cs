@@ -8,14 +8,20 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 
 {
+    [HideInInspector]
+    public static Player player;
     public Rigidbody2D rb2d;
     public float moveSpeed = 3f;
     public GameObject coinParticleSystem;
     public Animator anim;
+    public int levelsUnlocked = 1;
    
-    private int livesleft = 3;
     private Vector2 move;
 
+    private void Awake()
+    {
+        player = this;
+    }
     private void Update()
     {
         playermove();

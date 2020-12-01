@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int playerLives;
     public int keyToBeCollected;
     public int timeToCompleteLevel;
-    public GameObject Player;
+    public GameObject player;
     public GameObject pauseCanvas;
     public GameObject intialCheckPoint;
     public Text livesRemaining;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     private int keyleft = 0;
     int Score = 0;
     int currentIndex;
+    bool savetime = true;
     AudioSource _audio;
 
     private void Start()
@@ -53,6 +55,10 @@ public class GameManager : MonoBehaviour
         if ( takeaway==false && time > 0)
         {
             StartCoroutine(timeremaining());
+        }
+        if (savetime == true)
+        {
+            StartCoroutine(saveandloadprogress());
         }
     }
     public void Coin_Collect()
@@ -79,21 +85,20 @@ public class GameManager : MonoBehaviour
 
     public void restart()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(currentIndex);
     }
     public void death()
     {
         if (livesleft > 0)
         {
-            Player.transform.position = intialCheckPoint.transform.position;
+            player.transform.position = intialCheckPoint.transform.position;
             livesleft -= 1;
             livesRemaining.text = "X " + livesleft.ToString();
             _audio.PlayOneShot(enemyAttackSFX);
         }
         if(livesleft <= 0)
         {
-            Player.GetComponent<Animator>().SetBool("Death", true);
+            player.GetComponent<Animator>().SetBool("Death", true);
             _audio.PlayOneShot(gameLoseSFX);
             gameLoseText.SetActive(true);
             Time.timeScale = 0f;
@@ -110,13 +115,13 @@ public class GameManager : MonoBehaviour
         }
         if (keyleft == keyToBeCollected)
         {
-            Player.GetComponent<Animator>().SetBool("Win", true);
+            player.GetComponent<Animator>().SetBool("Win", true);
             Time.timeScale = 0f;
             gameWinText.SetActive(true);
             _audio.PlayOneShot(gameWinSFX);
             nextLevelButton.SetActive(true);
             mainMenuButton.SetActive(true);
-            passlevel();
+            Player.player.levelsUnlocked++;
         }
 
     }
@@ -148,12 +153,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextToLoad);
     }
 
-    public void passlevel()
+    IEnumerator saveandloadprogress()
     {
-        if(currentIndex >= PlayerPrefs.GetInt("levelsunlocked"))
-        {
-            PlayerPrefs.GetInt("levelunlocked", currentIndex++);
-        }
+        savetime = false;
+        yield return new WaitForSeconds(60);
+        SaveProgress.saveplayedata(Player.player);
+        SaveProgress.loadplayerdata();
+        savetime = false;
     }
-   
+
 }
